@@ -17,7 +17,7 @@
        under the License.
  */
 
-package com.phonegap.helloworld;
+package com.hooli.Route;
 
 import android.os.Bundle;
 import org.apache.cordova.*;
