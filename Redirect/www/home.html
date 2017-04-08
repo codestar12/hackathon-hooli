@@ -69,7 +69,7 @@
 		  var directionsService;
 		  var directionsDisplay;
 		  var routeDurations = new Array();
-		  
+		  var profileImage = JSON.parse(localStorage.getItem("profileImage"));
 		  function userProfileControl(controlDiv, mapObj) {
 		
         // Set CSS for the control border.
@@ -78,7 +78,9 @@
         image.style.height = '48px';
         image.style.borderRadius = '48px';
         image.style.marginLeft = '3%';
-		image.style.backgroundColor = 'grey';
+		image.style.backgroundColor = "grey";
+		image.style.backgroundImage = profileImage;	
+		image.onclick = function(){document.location.href = "profile.html";};
         controlDiv.appendChild(image);
 
         // Set CSS for the control interior.
