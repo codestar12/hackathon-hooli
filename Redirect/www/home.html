@@ -62,6 +62,7 @@
 			<div class="icon chall"><img src="images/challenges_icon-01.svg"></div>
 			<div class="icon more"><img src="images/more_icon-01.svg"></div>
 		</div>
+		<script src="cordova.js"></script>
 		<script>
 		  var mapObj;
 		  var routeArr;
@@ -70,29 +71,35 @@
 		  var directionsDisplay;
 		  var routeDurations = new Array();
 		  var profileImage = JSON.parse(localStorage.getItem("profileImage"));
+		  document.getElementById('aaa').src = profileImage;
 		  function userProfileControl(controlDiv, mapObj) {
 		
-        // Set CSS for the control border.
-        var image = document.createElement('div');
-        image.style.width = '48px';
-        image.style.height = '48px';
-        image.style.borderRadius = '48px';
-        image.style.marginLeft = '3%';
-		image.style.backgroundColor = "grey";
-		image.style.backgroundImage = profileImage;	
-		image.onclick = function(){document.location.href = "profile.html";};
-        controlDiv.appendChild(image);
+			// Set CSS for the control border.
+			var image = document.createElement('div');
+			image.style.width = '48px';
+			image.style.height = '48px';
+			image.style.borderRadius = '48px';
+			image.style.marginLeft = '3%';
+			//image.style.backgroundImage = profileImage;
+			var imageSrc = document.createElement('img');
+			imageSrc.style.width = '100%';
+			imageSrc.style.height = '100%';
+			imageSrc.style.display = 'block';
+			imageSrc.src = profileImage;
+			image.appendChild(imageSrc);
+			image.onclick = function(){document.location.href = "profile.html";};
+			controlDiv.appendChild(image);
 
-        // Set CSS for the control interior.
-        var points = document.createElement('div');
-        points.innerHTML = '100';
-        controlDiv.appendChild(points);
+			// Set CSS for the control interior.
+			var points = document.createElement('div');
+			points.innerHTML = '100';
+			controlDiv.appendChild(points);
 
-        //controlUI.addEventListener('click', function() {
-          
-        //});
+			//controlUI.addEventListener('click', function() {
+			  
+			//});
 
-      }
+		}
 	  
 	  function bottomControl(controlDiv, mapObj) {
 		
