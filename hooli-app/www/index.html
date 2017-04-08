@@ -19,113 +19,144 @@
 			padding: 0;
 		  }
 		  
-		  #inputArea{
-			height: 18%
+		  .wrapper {
+		  	max-width: 375px;
+		  	width: 100%;
+		  	height: 667px;
 		  }
-		  
+
+		  .leftCorner {
+		  	margin-left: 3%;
+			margin-top: 3%;
+			float: left;
+		  }
+
+		  #profile {
+		  	width: 45px;
+		  	height: 45px;
+		  	background-color: gray;
+		  	float: left;
+		  }
+
+		  #points {
+		  	margin-top: 10%;
+		  	float: left;
+		  }
+
+		  #inputArea{
+			height: 126px;
+			width: 92%;
+			float: left;
+		  }
+
 		  input{
 			width: 90%;
 		  }
 		  
 		  #topbar {
 			width: 100%;
-			height: 3%;
+			height: 20px;
 			background-color: white;
 		  }
 		</style>
     </head>
     <body>
-		<div id="topbar"></div>
-		<div id="inputArea">
-		<input id="from" value="Kyle, TX"></input>
-		<input id="to" value="Austin, TX"></input>
-		<input id="mode" value="DRIVING"></input>
-		<button id="submit">Find Route!</button>
-		<button id="clear">Clear!</button>
-		<button id="nxtRoute">Show Alternative</button>
-		</div>
-		<div id="map"></div>
-		<script src="cordova.js"></script>
-		<script>
-		  var mapObj;
-		  var routeArr;
-		  var routeIdx;
-		  
-		  document.getElementById('clear').addEventListener('click', function() {
-				initMap();
-			});
-			
-		  document.getElementById('nxtRoute').addEventListener('click', function() {
-				initMap();
-				nextRoute();
-			});
-		  
-		  function nextRoute(){
-			if(routeIdx + 1 < routeArr.routes.length){
-				routeIdx++;
-				new google.maps.DirectionsRenderer({
-					map: mapObj,
-					directions: routeArr,
-					routeIndex: routeIdx
+    	<div class="wrapper">
+			<div id="topbar"></div>
+			<div class="leftCorner">
+				<div id="profile"></div>
+				<div id="points">100 pts</div>
+			</div>
+			<div id="inputArea">
+			<input id="from" value="Kyle, TX"></input>
+			<input id="to" value="Austin, TX"></input>
+			<input id="mode" value="DRIVING"></input>
+			<button id="submit">Find Route!</button>
+			<button id="clear">Clear!</button>
+			<button id="nxtRoute">Show Alternative</button>
+			</div>
+			<div id="map"></div>
+			<script>
+			  var mapObj;
+			  var routeArr;
+			  var routeIdx;
+			  
+			  document.getElementById('clear').addEventListener('click', function() {
+					initMap();
 				});
-			}
-			else{
-				routeIdx = 0;
-				new google.maps.DirectionsRenderer({
-					map: mapObj,
-					directions: routeArr,
-					routeIndex: routeIdx
+				
+			  document.getElementById('nxtRoute').addEventListener('click', function() {
+					initMap();
+					nextRoute();
 				});
-			}
-		  }
-		  
-		  function initMap() {
-		    var directionsService = new google.maps.DirectionsService;
-		    var directionsDisplay = new google.maps.DirectionsRenderer;
-			mapObj = new google.maps.Map(document.getElementById('map'), {
-			  zoom: 13,
-			  center: {lat: 30.2672, lng: -97.7431}
-			});
-
-			var trafficLayer = new google.maps.TrafficLayer();
-			trafficLayer.setMap(mapObj);
-			
-			document.getElementById('submit').addEventListener('click', function() {
-				calculateAndDisplayRoute(directionsService, directionsDisplay);
-			});
-		  }
-		  
-		  function calculateAndDisplayRoute(directionsService, directionsDisplay){
-			var start = document.getElementById('from').value;
-			var end = document.getElementById('to').value;
-			var mode = document.getElementById('mode').value;
-			//alert("calc & Disp");
-			directionsService.route({
-					origin: start,
-					destination: end,
-					travelMode: mode,
-					provideRouteAlternatives: true
-				},
-				function(response, status){
-					if(status == 'OK'){
-						directionsDisplay.setDirections(response);
-						routeArr = response;
-						routeIdx = 0;
-						new google.maps.DirectionsRenderer({
-								map: mapObj,
-								directions: routeArr,
-								routeIndex: routeIdx
-						});
-					}
-					else{
-						alert("Directions request failed due to " + status);
-					}
+			  
+			  function nextRoute(){
+				if(routeIdx + 1 < routeArr.routes.length){
+					routeIdx++;
+					new google.maps.DirectionsRenderer({
+						map: mapObj,
+						directions: routeArr,
+						routeIndex: routeIdx
+					});
 				}
-			);
-		  }
-		</script>
-		<script async defer
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwy9ZT2_E10lqfjMQ7VmRyrEE7vQ4jHEY&callback=initMap">
-		</script>
+				else{
+					routeIdx = 0;
+					new google.maps.DirectionsRenderer({
+						map: mapObj,
+						directions: routeArr,
+						routeIndex: routeIdx
+					});
+				}
+			  }
+			  
+			  function initMap() {
+			    var directionsService = new google.maps.DirectionsService;
+			    var directionsDisplay = new google.maps.DirectionsRenderer;
+				mapObj = new google.maps.Map(document.getElementById('map'), {
+				  zoom: 13,
+				  center: {lat: 30.2672, lng: -97.7431}
+				});
+
+				var trafficLayer = new google.maps.TrafficLayer();
+				trafficLayer.setMap(mapObj);
+				
+				document.getElementById('submit').addEventListener('click', function() {
+					calculateAndDisplayRoute(directionsService, directionsDisplay);
+				});
+			  }
+			  
+			  function calculateAndDisplayRoute(directionsService, directionsDisplay){
+				var start = document.getElementById('from').value;
+				var end = document.getElementById('to').value;
+				var mode = document.getElementById('mode').value;
+				//alert("calc & Disp");
+				directionsService.route({
+						origin: start,
+						destination: end,
+						travelMode: mode,
+						provideRouteAlternatives: true
+					},
+					function(response, status){
+						if(status == 'OK'){
+							directionsDisplay.setDirections(response);
+							routeArr = response;
+							routeIdx = 0;
+							new google.maps.DirectionsRenderer({
+									map: mapObj,
+									directions: routeArr,
+									routeIndex: routeIdx
+							});
+						}
+						else{
+							alert("Directions request failed due to " + status);
+						}
+					}
+				);
+			  }
+			</script>
+			<script async defer
+			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwy9ZT2_E10lqfjMQ7VmRyrEE7vQ4jHEY&callback=initMap">
+			</script>
+		</div>
     </body>
 </html>
