@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+        <title>Blank App</title>
+		<title>Traffic layer</title>
+		<style>
+		  /* Always set the map height explicitly to define the size of the div
+		   * element that contains the map. */
+		  #map {
+			height: 85%;
+			bottom: 0px;
+		  }
+		  /* Optional: Makes the sample page fill the window. */
+		  html, body {
+			height: 100%;
+			margin: 0;
+			padding: 0;
+		  }
+
+		  #topbar {
+			width: 100%;
+			height: 3%;
+			background-color: gray;
+		  }
+
+		  #footer {
+		  	bottom: 0px;
+		  	position: fixed;
+		  	width: 100%;
+		  	height: 55px;
+		  }
+
+		  #navBar {
+		  	width: 100%;
+		  	height: 65px;
+		  }
+
+		  .icon {
+		  	width: 25px;
+		  	height: 25px;
+		  	margin-left: 25px;
+		  	margin-right: 25px;
+		  	margin-top: 10px;
+		  	float: left;
+		  }
+
+
+		</style>
+    </head>
+    <body>
+		<div id="topbar"></div>
+
+		<div id="map"></div>
+
+		<div id="footer">
+			<div class="icon sched"><img src="images/calendar_icon-01.svg"></div>
+			<div class="icon rewards"><img src='images/rewards_icon-01.svg'></div>
+			<div class="icon home"><img src="images/home_icon-01.svg"></div>
+			<div class="icon chall"><img src="images/challenges_icon-01.svg"></div>
+			<div class="icon more"><img src="images/more_icon-01.svg"></div>
+		</div>
+		<script>
+		  var mapObj;
+		  var routeArr;
+		  var routeIdx;
+		  var directionsService;
+		  var directionsDisplay;
+		  var routeDurations = new Array();
+		  
+		  function userProfileControl(controlDiv, mapObj) {
+		
+        // Set CSS for the control border.
+        var image = document.createElement('div');
+        image.style.width = '48px';
+        image.style.height = '48px';
+		image.style.backgroundColor = 'grey';
+        controlDiv.appendChild(image);
+
+        // Set CSS for the control interior.
+        var points = document.createElement('div');
+        points.innerHTML = '100';
+        controlDiv.appendChild(points);
+
+        //controlUI.addEventListener('click', function() {
+          
+        //});
+
+      }
+	  
+	  function bottomControl(controlDiv, mapObj) {
+		
+        // Set CSS for the control border.
+        var travelInfo = document.createElement('div');
+        travelInfo.style.width = '48px';
+        travelInfo.style.height = '48px';
+		travelInfo.style.backgroundColor = 'grey';
+        controlDiv.appendChild(travelInfo);
+
+        // Set CSS for the control interior.
+        var altRoute = document.createElement('div');
+        altRoute.innerHTML = 'pick route';
+        controlDiv.appendChild(altRoute);
+
+        altRoute.addEventListener('click', function() {
+			initMap();
+			nextRoute();
+        });
+
+      }
+	  
+
+		  
+		  function nextRoute(){
+			if(routeIdx + 1 < routeArr.routes.length){
+				routeIdx++;
+				new google.maps.DirectionsRenderer({
+					map: mapObj,
+					directions: routeArr,
+					routeIndex: routeIdx
+				});
+			}
+			else{
+				routeIdx = 0;
+				new google.maps.DirectionsRenderer({
+					map: mapObj,
+					directions: routeArr,
+					routeIndex: routeIdx
+				});
+			}
+		  }
+		  
+		  function initMap() {
+		    directionsService = new google.maps.DirectionsService;
+		    directionsDisplay = new google.maps.DirectionsRenderer;
+			mapObj = new google.maps.Map(document.getElementById('map'), {
+			  zoom: 13,
+			  center: {lat: 30.2672, lng: -97.7431},
+			  mapTypeControl: false,
+			  panControl:false,
+			  scaleControl:false,
+			  streetViewControl:false,
+			  zoomControl:false,
+			  styles: [
+				  {
+					"elementType": "geometry",
+					"stylers": [
+					  {
+						"color": "#263238"
+					  }
+					]
+				  },
+				  {
+					"elementType": "geometry.fill",
+					"stylers": [
+					  {
+						"color": "#263238"
+					  }
+					]
+				  },
+				  {
+					"elementType": "labels.text.fill",
+					"stylers": [
+					  {
+						"color": "#8ec3b9"
+					  }
+					]
+				  },
+				  {
+					"elementType": "labels.text.stroke",
+					"stylers": [
+					  {
+						"color": "#1a3646"
+					  }
+					]
+				  },
+				  {
+					"featureType": "administrative.country",
+					"elementType": "geometry.stroke",
+					"stylers": [
+					  {
+						"color": "#4b6878"
+					  }
+					]
+				  },
+				  {
+					"featureType": "administrative.land_parcel",
+					"stylers": [
+					  {
+						"visibility": "off"
+					  }
+					]
+				  },
+				  {
+					"featureType": "administrative.land_parcel",
+					"elementType": "labels.text.fill",
+					"stylers": [
+					  {
+						"color": "#64779e"
+					  }
+					]
+				  },
+				  {
+					"featureType": "administrative.neighborhood",
+					"stylers": [
+					  {
+						"visibility": "off"
+					  }
+					]
+				  },
+				  {
+					"featureType": "administrative.province",
+					"elementType": "geometry.stroke",
+					"stylers": [
+					  {
+						"color": "#4b6878"
+					  }
+					]
+				  },
+				  {
+					"featureType": "landscape.man_made",
+					"elementType": "geometry.stroke",
+					"stylers": [
+					  {
+						"color": "#334e87"
+					  }
+					]
+				  },
+				  {
+					"featureType": "landscape.natural",
+					"elementType": "geometry",
+					"stylers": [
+					  {
+						"color": "#263238"
+					  }
+					]
+				  },
+				  {
+					"featureType": "poi",
+					"elementType": "geometry",
+					"stylers": [
+					  {
+						"color": "#283d6a"
+					  }
+					]
+				  },
+				  {
+					"featureType": "poi",
+					"elementType": "labels.text",
+					"stylers": [
+					  {
+						"visibility": "off"
+					  }
+					]
+				  },
+				  {
+					"featureType": "poi",
+					"elementType": "labels.text.fill",
+					"stylers": [
+					  {
+						"color": "#6f9ba5"
+					  }
+					]
+				  },
+				  {
+					"featureType": "poi",
+					"elementType": "labels.text.stroke",
+					"stylers": [
+					  {
+						"color": "#1d2c4d"
+					  }
+					]
+				  },
+				  {
+					"featureType": "poi.park",
+					"elementType": "geometry.fill",
+					"stylers": [
+					  {
+						"color": "#023e58"
+					  }
+					]
+				  },
+				  {
+					"featureType": "poi.park",
+					"elementType": "labels.text.fill",
+					"stylers": [
+					  {
+						"color": "#3C7680"
+					  }
+					]
+				  },
+				  {
+					"featureType": "road",
+					"elementType": "geometry",
+					"stylers": [
+					  {
+						"color": "#40666d"
+					  },
+					  {
+						"weight": 1
+					  }
+					]
+				  },
+				  {
+					"featureType": "road",
+					"elementType": "labels",
+					"stylers": [
+					  {
+						"visibility": "off"
+					  }
+					]
+				  },
+				  {
+					"featureType": "road",
+					"elementType": "labels.text.fill",
+					"stylers": [
+					  {
+						"color": "#98a5be"
+					  }
+					]
+				  },
+				  {
+					"featureType": "road",
+					"elementType": "labels.text.stroke",
+					"stylers": [
+					  {
+						"color": "#1d2c4d"
+					  }
+					]
+				  },
+				  {
+					"featureType": "road.arterial",
+					"elementType": "labels",
+					"stylers": [
+					  {
+						"visibility": "off"
+					  }
+					]
+				  },
+				  {
+					"featureType": "road.highway",
+					"elementType": "geometry",
+					"stylers": [
+					  {
+						"color": "#3f97a7"
+					  }
+					]
+				  },
+				  {
+					"featureType": "road.highway",
+					"elementType": "labels",
+					"stylers": [
+					  {
+						"visibility": "off"
+					  }
+					]
+				  },
+				  {
+					"featureType": "road.highway",
+					"elementType": "labels.text.fill",
+					"stylers": [
+					  {
+						"color": "#b0d5ce"
+					  }
+					]
+				  },
+				  {
+					"featureType": "road.highway",
+					"elementType": "labels.text.stroke",
+					"stylers": [
+					  {
+						"color": "#023e58"
+					  }
+					]
+				  },
+				  {
+					"featureType": "road.local",
+					"stylers": [
+					  {
+						"visibility": "off"
+					  }
+					]
+				  },
+				  {
+					"featureType": "transit",
+					"elementType": "labels.text.fill",
+					"stylers": [
+					  {
+						"color": "#98a5be"
+					  }
+					]
+				  },
+				  {
+					"featureType": "transit",
+					"elementType": "labels.text.stroke",
+					"stylers": [
+					  {
+						"color": "#1d2c4d"
+					  }
+					]
+				  },
+				  {
+					"featureType": "transit.line",
+					"elementType": "geometry.fill",
+					"stylers": [
+					  {
+						"color": "#283d6a"
+					  }
+					]
+				  },
+				  {
+					"featureType": "transit.station",
+					"elementType": "geometry",
+					"stylers": [
+					  {
+						"color": "#3a4762"
+					  }
+					]
+				  },
+				  {
+					"featureType": "water",
+					"elementType": "geometry",
+					"stylers": [
+					  {
+						"color": "#0e1626"
+					  }
+					]
+				  },
+				  {
+					"featureType": "water",
+					"elementType": "labels.text",
+					"stylers": [
+					  {
+						"visibility": "off"
+					  }
+					]
+				  },
+				  {
+					"featureType": "water",
+					"elementType": "labels.text.fill",
+					"stylers": [
+					  {
+						"color": "#4e6d70"
+					  }
+					]
+				  }
+				]
+			});
+
+			var trafficLayer = new google.maps.TrafficLayer();
+			trafficLayer.setMap(mapObj);
+			
+			var userProfile = document.createElement('div');
+			var centerControl = new userProfileControl(userProfile, mapObj);
+			userProfile.index = 1;
+			mapObj.controls[google.maps.ControlPosition.TOP_LEFT].push(userProfile);
+			
+			var mapController = document.createElement('div');
+			var centerControl2 = new bottomControl(mapController, mapObj);
+			mapController.index = 1;
+			mapObj.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(mapController);
+		  }
+		  
+		  function calculateAndDisplayRoute(directionsService, directionsDisplay){
+			//var start = document.getElementById('from').value;
+			//var end = document.getElementById('to').value;
+			//var mode = document.getElementById('mode').value;
+			//alert("calc & Disp");
+			
+			var start = "Austin, TX"
+			var end = "Cedar Park, TX";
+			var mode = "DRIVING"
+			
+			directionsService.route({
+					origin: start,
+					destination: end,
+					travelMode: mode,
+					provideRouteAlternatives: true
+				},
+				function(response, status){
+					if(status == 'OK'){
+						directionsDisplay.setDirections(response);
+						routeArr = response;
+						routeIdx = 0;
+						new google.maps.DirectionsRenderer({
+								map: mapObj,
+								directions: routeArr,
+								routeIndex: routeIdx
+						});
+						for(var i = 0; i < routeArr.routes.length; i++){
+							//Acess text and value for string and integer
+							routeDurations.push(routeArr.routes[i].legs[0].duration);
+						}
+					}
+					else{
+						alert("Directions request failed due to " + status);
+					}
+				}
+			);
+			
+
+		  }
+		</script>
+		<script async defer
+		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAwy9ZT2_E10lqfjMQ7VmRyrEE7vQ4jHEY&callback=initMap">
+		</script>
+    </body>
+</html>
