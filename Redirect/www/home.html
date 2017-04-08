@@ -65,7 +65,7 @@
 		<script>
 		  var mapObj;
 		  var routeArr;
-		  var routeIdx;
+		  var routeIdx = 0;
 		  var directionsService;
 		  var directionsDisplay;
 		  var routeDurations = new Array();
@@ -465,6 +465,7 @@
 			var centerControl2 = new bottomControl(mapController, mapObj);
 			mapController.index = 1;
 			mapObj.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(mapController);
+			calculateAndDisplayRoute(directionsService, directionsDisplay);
 		  }
 		  
 		  function calculateAndDisplayRoute(directionsService, directionsDisplay){
@@ -487,12 +488,6 @@
 					if(status == 'OK'){
 						directionsDisplay.setDirections(response);
 						routeArr = response;
-						routeIdx = 0;
-						new google.maps.DirectionsRenderer({
-								map: mapObj,
-								directions: routeArr,
-								routeIndex: routeIdx
-						});
 						for(var i = 0; i < routeArr.routes.length; i++){
 							//Acess text and value for string and integer
 							routeDurations.push(routeArr.routes[i].legs[0].duration);
