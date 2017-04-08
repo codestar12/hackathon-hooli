@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.hooli.redirect" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:gap="http://phonegap.com/ns/1.0">
+    <name>Redirect</name>
+    <description>
+        Reroutes and lowers the number of vehicles in the highway to reduce traffic congestion.
+    </description>
+    <author email="@" href="http://github.com/codestar12/hackathon-hooli">
+        Hooli
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+</widget>
