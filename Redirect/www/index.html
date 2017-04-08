@@ -55,38 +55,48 @@
 		  var directionsDisplay;
 		  
 		  
-		  function CenterControl(controlDiv, mapObj) {
-
+		  function userProfileControl(controlDiv, mapObj) {
+		
         // Set CSS for the control border.
-        var controlUI = document.createElement('div');
-        controlUI.style.backgroundColor = '#fff';
-        controlUI.style.border = '2px solid #fff';
-        controlUI.style.borderRadius = '3px';
-        controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
-        controlUI.style.cursor = 'pointer';
-        controlUI.style.marginBottom = '22px';
-        controlUI.style.textAlign = 'center';
-        controlUI.title = 'Click to recenter the map';
-        controlDiv.appendChild(controlUI);
+        var image = document.createElement('div');
+        image.style.width = '48px';
+        image.style.height = '48px';
+		image.style.backgroundColor = 'grey';
+        controlDiv.appendChild(image);
 
         // Set CSS for the control interior.
-        var controlText = document.createElement('div');
-        controlText.style.color = 'rgb(25,25,25)';
-        controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
-        controlText.style.fontSize = '16px';
-        controlText.style.lineHeight = '38px';
-        controlText.style.paddingLeft = '5px';
-        controlText.style.paddingRight = '5px';
-        controlText.innerHTML = 'Show Alternative';
-        controlUI.appendChild(controlText);
+        var points = document.createElement('div');
+        points.innerHTML = '100';
+        controlDiv.appendChild(points);
 
-        // Setup the click event listeners: simply set the map to Chicago.
-        controlUI.addEventListener('click', function() {
-          initMap();
-		  nextRoute();
+        //controlUI.addEventListener('click', function() {
+          
+        //});
+
+      }
+	  
+	  function bottomControl(controlDiv, mapObj) {
+		
+        // Set CSS for the control border.
+        var travelInfo = document.createElement('div');
+        travelInfo.style.width = '48px';
+        travelInfo.style.height = '48px';
+		travelInfo.style.backgroundColor = 'grey';
+        controlDiv.appendChild(travelInfo);
+
+        // Set CSS for the control interior.
+        var altRoute = document.createElement('div');
+        altRoute.innerHTML = 'pick route';
+        controlDiv.appendChild(altRoute);
+
+        altRoute.addEventListener('click', function() {
+			initMap();
+			nextRoute();
         });
 
       }
+	  
+
 		  
 		  function nextRoute(){
 			if(routeIdx + 1 < routeArr.routes.length){
@@ -431,10 +441,15 @@
 				calculateAndDisplayRoute(directionsService, directionsDisplay);
 			});
 			
-			 var centerControlDiv = document.createElement('div');
-			var centerControl = new CenterControl(centerControlDiv, mapObj);
-			centerControlDiv.index = 1;
-			mapObj.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv);
+			var userProfile = document.createElement('div');
+			var centerControl = new userProfileControl(userProfile, mapObj);
+			userProfile.index = 1;
+			mapObj.controls[google.maps.ControlPosition.TOP_LEFT].push(userProfile);
+			
+			var mapController = document.createElement('div');
+			var centerControl2 = new bottomControl(mapController, mapObj);
+			mapController.index = 1;
+			mapObj.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(mapController);
 		  }
 		  
 		  function calculateAndDisplayRoute(directionsService, directionsDisplay){
