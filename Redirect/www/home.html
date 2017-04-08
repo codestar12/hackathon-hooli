@@ -22,7 +22,7 @@
 		  #topbar {
 			width: 100%;
 			height: 3%;
-			background-color: gray;
+			background-color: #D14A5B;
 		  }
 
 		  #footer {
@@ -56,7 +56,7 @@
 		<div id="map"></div>
 
 		<div id="footer">
-			<div class="icon sched"><img src="images/calendar_icon-01.svg"></div>
+			<a href="sched.html"><div class="icon sched"><img src="images/calendar_icon-01.svg"></div></a>
 			<div class="icon rewards"><img src='images/rewards_icon-01.svg'></div>
 			<div class="icon home"><img src="images/home_icon-01.svg"></div>
 			<div class="icon chall"><img src="images/challenges_icon-01.svg"></div>
@@ -78,6 +78,7 @@
         image.style.height = '48px';
         image.style.borderRadius = '48px';
         image.style.marginLeft = '3%';
+        image.style.marginTop = '3%';
 		image.style.backgroundColor = "grey";
 		image.style.backgroundImage = profileImage;	
 		image.onclick = function(){document.location.href = "profile.html";};
@@ -99,16 +100,19 @@
         // Set CSS for the control border.
         var travelInfo = document.createElement('div');
         travelInfo.style.width = '350px';
-        travelInfo.style.height = '120px';
-		travelInfo.style.backgroundImage = 'url(images/commute.png)';
+        travelInfo.style.height = '80px';
+		travelInfo.style.backgroundImage = 'url(images/home_top-01.svg)';
 		travelInfo.style.backgroundSize = '350px';
         controlDiv.appendChild(travelInfo);
 
         // Set CSS for the control interior.
         var altRoute = document.createElement('div');
         altRoute.style.width = '100%';
-        altRoute.style.height = '50px';
-        travelInfo.appendChild(altRoute);
+        altRoute.style.height = '49px';
+        altRoute.style.backgroundImage = 'url(images/home_bottom-01.svg';
+        altRoute.style.backgroundSize = '350px';
+        altRoute.style.marginBottom = '8%';
+        controlDiv.appendChild(altRoute);
 
         altRoute.addEventListener('click', function() {
 			initMap();
