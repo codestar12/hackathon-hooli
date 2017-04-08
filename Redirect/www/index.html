@@ -453,10 +453,15 @@
 		  }
 		  
 		  function calculateAndDisplayRoute(directionsService, directionsDisplay){
-			var start = document.getElementById('from').value;
-			var end = document.getElementById('to').value;
-			var mode = document.getElementById('mode').value;
+			//var start = document.getElementById('from').value;
+			//var end = document.getElementById('to').value;
+			//var mode = document.getElementById('mode').value;
 			//alert("calc & Disp");
+			
+			var start = "Austin, TX"
+			var end = "Cedar Park, TX";
+			var mode = "DRIVING"
+			
 			directionsService.route({
 					origin: start,
 					destination: end,
