@@ -53,7 +53,7 @@
 		  var routeIdx;
 		  var directionsService;
 		  var directionsDisplay;
-		  
+		  var routeDurations = new Array();
 		  
 		  function userProfileControl(controlDiv, mapObj) {
 		
@@ -478,12 +478,17 @@
 								directions: routeArr,
 								routeIndex: routeIdx
 						});
+						for(var i = 0; i < routeArr.routes.length; i++){
+							//Acess text and value for string and integer
+							routeDurations.push(routeArr.routes[i].legs[0].duration);
+						}
 					}
 					else{
 						alert("Directions request failed due to " + status);
 					}
 				}
 			);
+			
 			document.getElementById('clear').addEventListener('click', function() {
 				initMap();
 			});
