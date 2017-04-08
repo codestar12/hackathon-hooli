@@ -76,6 +76,8 @@
         var image = document.createElement('div');
         image.style.width = '48px';
         image.style.height = '48px';
+        image.style.borderRadius = '48px';
+        image.style.marginLeft = '3%';
 		image.style.backgroundColor = 'grey';
         controlDiv.appendChild(image);
 
@@ -94,15 +96,17 @@
 		
         // Set CSS for the control border.
         var travelInfo = document.createElement('div');
-        travelInfo.style.width = '48px';
-        travelInfo.style.height = '48px';
-		travelInfo.style.backgroundColor = 'grey';
+        travelInfo.style.width = '350px';
+        travelInfo.style.height = '120px';
+		travelInfo.style.backgroundImage = 'url(images/commute.png)';
+		travelInfo.style.backgroundSize = '350px';
         controlDiv.appendChild(travelInfo);
 
         // Set CSS for the control interior.
         var altRoute = document.createElement('div');
-        altRoute.innerHTML = 'pick route';
-        controlDiv.appendChild(altRoute);
+        altRoute.style.width = '100%';
+        altRoute.style.height = '50px';
+        travelInfo.appendChild(altRoute);
 
         altRoute.addEventListener('click', function() {
 			initMap();
